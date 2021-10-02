@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 
 import { AbstractEntity } from '../../common/abstract.entity';
 import { VirtualColumn } from '../../decorators/virtual-column.decorator';
@@ -6,6 +6,7 @@ import { QuestionDto } from './dto/question-dto';
 
 import { UserEntity } from '../user/user.entity';
 import { ThemeEntity } from '../themes/themes.entity';
+import { AnswerEntity } from '../answers/answers.entity';
 
 @Entity({ name: 'questions' })
 export class QuestionEntity extends AbstractEntity<QuestionDto> {
@@ -23,6 +24,9 @@ export class QuestionEntity extends AbstractEntity<QuestionDto> {
 
   @ManyToOne(() => UserEntity)
   user: UserEntity;
+
+  @OneToMany(() => AnswerEntity, (answer) => answer.question)
+  answers: AnswerEntity[];
 
   @Column({ nullable: false })
   cost: number;

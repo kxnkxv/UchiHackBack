@@ -17,6 +17,7 @@ import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
 // import { QuestionsService } from './modules/questions/questions.service';
 // import { ThemesService } from './modules/themes/themes.service';
+import { AnswersModule } from './modules/answers/answers.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { SharedModule } from './shared/shared.module';
       inject: [ApiConfigService],
     }),
     HealthCheckerModule,
+    AnswersModule,
   ],
   providers: [],
 })

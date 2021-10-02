@@ -19,6 +19,9 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
+#OS
+.DS_Store
+
 # nyc test coverage
 .nyc_output
 
@@ -76,3 +79,4 @@ mongo
 
 # Docker compose ganarated files
 db-data
+

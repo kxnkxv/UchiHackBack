@@ -5,6 +5,7 @@ import type { QuestionEntity } from '../questions.entity';
 
 import { UserEntity } from '../../user/user.entity';
 import { ThemeEntity } from '../../themes/themes.entity';
+import { AnswerEntity } from '../../answers/answers.entity';
 
 // title (название вопроса)
 // description (текст вопроса)
@@ -34,6 +35,9 @@ export class QuestionDto extends AbstractDto {
   user: UserEntity;
 
   @ApiPropertyOptional()
+  answers: AnswerEntity[];
+
+  @ApiPropertyOptional()
   cost: number;
 
   @ApiPropertyOptional()
@@ -52,6 +56,7 @@ export class QuestionDto extends AbstractDto {
     this.theme = question.theme;
     this.subtheme = question.subtheme;
     this.user = question.user;
+    this.answers = question.answers;
     this.cost = question.cost;
     this.status = question.status;
     this.time = question.time;
