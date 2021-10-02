@@ -21,7 +21,7 @@ export class AnswerCreateDto {
   @IsString()
   @IsNotEmpty()
   @Trim()
-  readonly content: string;
+  readonly message: string;
 
   @ApiProperty()
   @IsString()

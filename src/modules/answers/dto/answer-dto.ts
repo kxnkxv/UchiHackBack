@@ -8,7 +8,7 @@ import { QuestionEntity } from '../../questions/questions.entity';
 
 export class AnswerDto extends AbstractDto {
   @ApiPropertyOptional()
-  content: string;
+  message: string;
 
   @ApiPropertyOptional()
   question: QuestionEntity['id'];
@@ -19,7 +19,7 @@ export class AnswerDto extends AbstractDto {
   constructor(answer: AnswerEntity, options?: Partial<{}>) {
     super(answer);
     this.id = answer.id;
-    this.content = answer.content;
+    this.message = answer.message;
     this.question = answer.question;
     this.user = answer.user;
   }

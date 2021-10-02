@@ -38,6 +38,15 @@ export class QuestionsService {
     return items.toPageDto(pageMetaDto);
   }
 
+  async getQuestionsBySearch(
+    pageOptionsDto: QuestionPageOptionsDto,
+  ): Promise<PageDto<QuestionDto>> {
+    const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+    const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
+
+    return items.toPageDto(pageMetaDto);
+  }
+
   async getQuestion(questionId: string): Promise<QuestionDto> {
     const queryBuilder = this.questionRepository.createQueryBuilder('questions');
 

@@ -7,7 +7,7 @@ services:
   # app:
   #   env_file:
   #     - .env
-  #   container_name: awesome_nest_boilerplate
+  #   container_name: backend
   #   restart: always
   #   build: .
   #   ports:
@@ -26,7 +26,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - db:/var/lib/postgresql/data
+      - ./db:/var/lib/postgresql/data
 
   adminer:
     image: adminer

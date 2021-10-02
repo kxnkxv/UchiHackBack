@@ -53,7 +53,7 @@ export class QuestionsController {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Get suggestions list',
+    description: 'Get search list',
     type: PageDto,
   })
   questionsSuggestions(
@@ -61,6 +61,21 @@ export class QuestionsController {
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
     return this.questionService.getQuestions(pageOptionsDto);
+  }
+
+  @Post('search')
+  @Auth(RoleType.USER)
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get suggestions list',
+    type: PageDto,
+  })
+  questionsSearch(
+    @Query(new ValidationPipe({ transform: true }))
+    pageOptionsDto: QuestionPageOptionsDto,
+  ): Promise<PageDto<QuestionDto>> {
+    return this.questionService.getQuestionsBySearch(pageOptionsDto);
   }
 
   @Post('create')
