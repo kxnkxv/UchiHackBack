@@ -67,7 +67,7 @@ export class AnswersController {
     return createdAnswer.toDto<typeof AnswerDto>();
   }
 
-  @Get(':id')
+  @Get('id/:id')
   @Auth(RoleType.USER)
   @HttpCode(HttpStatus.OK)
   @ApiResponse({

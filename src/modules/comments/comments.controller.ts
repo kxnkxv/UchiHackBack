@@ -67,7 +67,7 @@ export class CommentsController {
     return createdComment.toDto<typeof CommentDto>();
   }
 
-  @Get(':id')
+  @Get('id/:id')
   @Auth(RoleType.USER)
   @HttpCode(HttpStatus.OK)
   @ApiResponse({

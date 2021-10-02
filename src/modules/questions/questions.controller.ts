@@ -48,7 +48,7 @@ export class QuestionsController {
     return this.questionService.getQuestions(pageOptionsDto);
   }
 
-  @Post('suggestions')
+  @Get('suggestions')
   @Auth(RoleType.USER)
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
@@ -60,10 +60,10 @@ export class QuestionsController {
     @Query(new ValidationPipe({ transform: true }))
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
-    return this.questionService.getQuestions(pageOptionsDto);
+    return this.questionService.getQuestionsBySuggestions(pageOptionsDto);
   }
 
-  @Post('search')
+  @Get('search')
   @Auth(RoleType.USER)
   @HttpCode(HttpStatus.OK)
   @ApiResponse({

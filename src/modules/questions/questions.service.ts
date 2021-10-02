@@ -42,6 +42,26 @@ export class QuestionsService {
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
     const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+
+    const { q } = pageOptionsDto;
+
+    queryBuilder.searchByString(q, ['title', 'description']);
+
+    const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
+
+    return items.toPageDto(pageMetaDto);
+  }
+
+  async getQuestionsBySuggestions(
+    pageOptionsDto: QuestionPageOptionsDto,
+  ): Promise<PageDto<QuestionDto>> {
+    const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+
+    const { q } = pageOptionsDto;
+
+    queryBuilder.searchByLevenshtein(q, ['title', 'description']);
+
+
     const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
 
     return items.toPageDto(pageMetaDto);

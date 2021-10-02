@@ -31,6 +31,7 @@ declare global {
 declare module 'typeorm' {
   interface QueryBuilder<Entity> {
     searchByString(q: string, columnNames: string[]): this;
+    searchByLevenshtein(q: string, columnNames: string[]): this;
   }
 
   interface SelectQueryBuilder<Entity> {
@@ -65,6 +66,28 @@ QueryBuilder.prototype.searchByString = function (q, columnNames) {
   );
 
   this.setParameter('q', `%${q}%`);
+
+  return this;
+};
+
+QueryBuilder.prototype.searchByLevenshtein = function (q, columnNames) {
+  if (!q) {
+    return this;
+  }
+
+  const searchItems = q.split(' ');
+
+  for (const searchItem of searchItems) {
+    this.andWhere(
+      new Brackets((qb) => {
+        for (const item of columnNames) {
+          qb.orWhere(`levenshtein_less_equal(:q, ${item}, 2)`);
+        }
+      }),
+    );
+
+    this.setParameter('q', `%${searchItem}%`);
+  }
 
   return this;
 };
