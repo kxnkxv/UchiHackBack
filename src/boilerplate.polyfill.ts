@@ -81,7 +81,7 @@ QueryBuilder.prototype.searchByLevenshtein = function (q, columnNames) {
     this.andWhere(
       new Brackets((qb) => {
         for (const item of columnNames) {
-          qb.orWhere(`levenshtein_less_equal(:q, ${item}, 2)`);
+          qb.orWhere(`levenshtein(:q, ${item}) >= 2`);
         }
       }),
     );
