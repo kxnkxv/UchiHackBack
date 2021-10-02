@@ -8,13 +8,14 @@ export class ThemeDto extends AbstractDto {
   title: string;
 
   @ApiPropertyOptional()
-  parent: ThemeEntity;
+  parent: ThemeEntity['id'];
 
   @ApiPropertyOptional()
-  subthemes: ThemeEntity[];
+  subthemes: ThemeEntity['id'][];
 
   constructor(theme: ThemeEntity, options?: Partial<{}>) {
     super(theme);
+    this.id = theme.id;
     this.title = theme.title;
     this.parent = theme.parent;
     this.subthemes = theme.subthemes

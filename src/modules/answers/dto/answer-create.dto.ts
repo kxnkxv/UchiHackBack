@@ -27,11 +27,11 @@ export class AnswerCreateDto {
   @IsString()
   @IsOptional()
   @Trim()
-  readonly question: QuestionEntity;
+  readonly question: QuestionEntity['id'];
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
   @Trim()
-  readonly user: UserEntity;
+  user: UserEntity['id'];
 }

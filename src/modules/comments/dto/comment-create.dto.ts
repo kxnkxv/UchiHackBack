@@ -1,26 +1,37 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsEmail,
   IsNotEmpty,
   IsEmpty,
   IsOptional,
   IsPhoneNumber,
+  IsNumber,
   IsString,
   MinLength,
 } from 'class-validator';
 
 import { Trim } from '../../../decorators/transforms.decorator';
 
-export class ThemeCreateDto {
+import { UserEntity } from '../../user/user.entity';
+import { QuestionEntity } from '../../questions/questions.entity';
+
+export class CommentCreateDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
   @Trim()
-  readonly title: string;
+  readonly message: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
   @Trim()
-  readonly parent: ThemeEntity['id'];
+  readonly question: QuestionEntity['id'];
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  @Trim()
+  user: UserEntity['id'];
 }

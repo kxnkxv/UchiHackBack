@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Query,
   ValidationPipe,
+  UseInterceptors
 } from '@nestjs/common';
 import { ApiResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
@@ -15,11 +16,14 @@ import { PageDto } from '../../common/dto/page.dto';
 import { AuthUser } from '../../decorators/auth-user.decorator';
 import { Auth, UUIDParam } from '../../decorators/http.decorators';
 import { TranslationService } from '../../shared/services/translation.service';
+
+import { AuthUserInterceptor } from '../../interceptors/auth-user-interceptor.service';
+import { UserEntity } from '../user/user.entity';
+
 import { QuestionDto } from './dto/question-dto';
 import { QuestionPageOptionsDto } from './dto/questions-page-options.dto';
 import { QuestionEntity } from './questions.entity';
 import { QuestionsService } from './questions.service';
-
 import type { QuestionCreateDto } from './dto/question-create.dto';
 
 @Controller('questions')
@@ -61,11 +65,15 @@ export class QuestionsController {
 
   @Post('create')
   @Auth(RoleType.USER)
+  @UseInterceptors(AuthUserInterceptor)
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: QuestionDto, description: 'Successfully Created Question' })
   async createQuestion(
     @Body() questionCreateDto: QuestionCreateDto,
+    @AuthUser() user: UserEntity,
   ): Promise<QuestionDto> {
+    questionCreateDto.user = user.id;
+
     const createdTheme = await this.questionService.createQuestion(
       questionCreateDto,
     );

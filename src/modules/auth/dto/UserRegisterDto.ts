@@ -41,4 +41,19 @@ export class UserRegisterDto {
   @IsPhoneNumber()
   @IsOptional()
   phone: string;
+
+  @ApiProperty()
+  @Column()
+  @IsOptional()
+  patronymic: string;
+
+  @ApiProperty()
+  @Column()
+  @IsOptional()
+  emailNotify: boolean;
+
+  @ApiProperty()
+  @Column()
+  @IsOptional()
+  balance: number;
 }

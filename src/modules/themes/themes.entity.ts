@@ -9,11 +9,11 @@ export class ThemeEntity extends AbstractEntity<ThemeDto> {
   @Column({ nullable: false })
   title: string;
 
-  @OneToMany(() => ThemeEntity, (theme) => theme.subthemes)
-  subthemes: ThemeEntity[];
+  @OneToMany(() => ThemeEntity, (theme) => theme.id)
+  subthemes: ThemeEntity['id'][];
 
   @ManyToOne(() => ThemeEntity)
-  parent: ThemeEntity;
+  parent: ThemeEntity['id'];
 
   dtoClass = ThemeDto;
 }

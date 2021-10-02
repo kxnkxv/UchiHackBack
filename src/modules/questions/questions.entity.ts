@@ -8,6 +8,20 @@ import { UserEntity } from '../user/user.entity';
 import { ThemeEntity } from '../themes/themes.entity';
 import { AnswerEntity } from '../answers/answers.entity';
 
+// export interface QuestionType {
+//   id: string;
+//   title: string;
+//   description: string;
+//   theme: string;
+//   subTheme: string;
+//   createdAt: Moment;
+//   user: UserType;
+//   cost: number;
+//   status: string;
+//   time: number;
+//   urgently: boolean;
+// }
+
 @Entity({ name: 'questions' })
 export class QuestionEntity extends AbstractEntity<QuestionDto> {
   @Column({ nullable: false })
@@ -17,16 +31,16 @@ export class QuestionEntity extends AbstractEntity<QuestionDto> {
   description: string;
   
   @ManyToOne(() => ThemeEntity)
-  theme: ThemeEntity;
+  theme: ThemeEntity['id'];
 
   @ManyToOne(() => ThemeEntity)
-  subtheme: ThemeEntity;
+  subTheme: ThemeEntity['id'];
 
   @ManyToOne(() => UserEntity)
-  user: UserEntity;
+  user: UserEntity['id'];
 
   @OneToMany(() => AnswerEntity, (answer) => answer.question)
-  answers: AnswerEntity[];
+  answers: AnswerEntity['id'][];
 
   @Column({ nullable: false })
   cost: number;
@@ -38,7 +52,7 @@ export class QuestionEntity extends AbstractEntity<QuestionDto> {
   time: number;
 
   @Column({ nullable: true })
-  urgent: boolean;
+  urgently: boolean;
 
   dtoClass = QuestionDto;
 }

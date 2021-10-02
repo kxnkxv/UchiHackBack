@@ -7,17 +7,6 @@ import { UserEntity } from '../../user/user.entity';
 import { ThemeEntity } from '../../themes/themes.entity';
 import { AnswerEntity } from '../../answers/answers.entity';
 
-// title (название вопроса)
-// description (текст вопроса)
-// theme (Категория)
-// subtheme (Подкатегория)
-// createdAt (время создания)
-// USER (Пользователь который создал вопрос)
-// coast (Баллы за выполнение)
-// status (Решено/не решено)
-// time (огранечение по времени)
-// сроочное/несрочное задание
-
 export class QuestionDto extends AbstractDto {
   @ApiPropertyOptional()
   title: string;
@@ -26,16 +15,16 @@ export class QuestionDto extends AbstractDto {
   description: string;
 
   @ApiPropertyOptional()
-  theme: ThemeEntity;
+  theme: ThemeEntity['id'];
 
   @ApiPropertyOptional()
-  subtheme: ThemeEntity;
+  subTheme: ThemeEntity['id'];
 
   @ApiPropertyOptional()
-  user: UserEntity;
+  user: UserEntity['id'];
 
   @ApiPropertyOptional()
-  answers: AnswerEntity[];
+  answers: AnswerEntity['id'][];
 
   @ApiPropertyOptional()
   cost: number;
@@ -47,19 +36,20 @@ export class QuestionDto extends AbstractDto {
   time: number;
 
   @ApiPropertyOptional()
-  urgent: boolean;
+  urgently: boolean;
 
   constructor(question: QuestionEntity, options?: Partial<{}>) {
     super(question);
+    this.id = question.id;
     this.title = question.title;
     this.description = question.description;
     this.theme = question.theme;
-    this.subtheme = question.subtheme;
+    this.subTheme = question.subTheme;
     this.user = question.user;
     this.answers = question.answers;
     this.cost = question.cost;
     this.status = question.status;
     this.time = question.time;
-    this.urgent = question.urgent;
+    this.urgently = question.urgently;
   }
 }

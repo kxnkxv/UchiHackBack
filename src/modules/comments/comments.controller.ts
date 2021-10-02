@@ -20,18 +20,18 @@ import { TranslationService } from '../../shared/services/translation.service';
 import { AuthUserInterceptor } from '../../interceptors/auth-user-interceptor.service';
 import { UserEntity } from '../user/user.entity';
 
-import { AnswerDto } from './dto/answer-dto';
-import { AnswerPageOptionsDto } from './dto/answer-page-options.dto';
-import { AnswerEntity } from './answers.entity';
-import { AnswersService } from './answers.service';
+import { CommentDto } from './dto/comment-dto';
+import { CommentPageOptionsDto } from './dto/comment-page-options.dto';
+import { CommentEntity } from './comments.entity';
+import { CommentsService } from './comments.service';
 
-import type { AnswerCreateDto } from './dto/answer-create.dto';
+import type { CommentCreateDto } from './dto/comment-create.dto';
 
-@Controller('answers')
-@ApiTags('answers')
-export class AnswersController {
+@Controller('comments')
+@ApiTags('comments')
+export class CommentsController {
   constructor(
-    private answerService: AnswersService,
+    private commentService: CommentsService,
   ) {}
 
   @Get('question/:questionId')
@@ -40,31 +40,31 @@ export class AnswersController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get comment',
-    type: AnswerDto,
+    type: CommentDto,
   })
   getCommentByQuestion(
     @UUIDParam('id') questionId: string,
-    pageOptionsDto: AnswerPageOptionsDto,
-  ): Promise<PageDto<AnswerDto>> {
-    return this.answerService.getAnswersByQuestion(pageOptionsDto, questionId);
+    pageOptionsDto: CommentPageOptionsDto,
+  ): Promise<PageDto<CommentDto>> {
+    return this.commentService.getCommentByQuestion(pageOptionsDto, questionId);
   }
 
   @Post('create')
   @Auth(RoleType.USER)
   @UseInterceptors(AuthUserInterceptor)
   @HttpCode(HttpStatus.OK)
-  @ApiOkResponse({ type: AnswerDto, description: 'Successfully Created Answer' })
-  async createAnswer(
-    @Body() answerCreateDto: AnswerCreateDto,
+  @ApiOkResponse({ type: CommentDto, description: 'Successfully Created Comment' })
+  async createComment(
+    @Body() commentCreateDto: CommentCreateDto,
     @AuthUser() user: UserEntity,
-  ): Promise<AnswerDto> {
-    answerCreateDto.user = user.id;
+  ): Promise<CommentDto> {
+    commentCreateDto.user = user.id;
 
-    const createdAnswer = await this.answerService.createAnswer(
-      answerCreateDto,
+    const createdComment = await this.commentService.createComment(
+      commentCreateDto,
     );
 
-    return createdAnswer.toDto<typeof AnswerDto>();
+    return createdComment.toDto<typeof CommentDto>();
   }
 
   @Get(':id')
@@ -72,10 +72,10 @@ export class AnswersController {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Get answer',
-    type: AnswerDto,
+    description: 'Get comment',
+    type: CommentDto,
   })
-  getAnswer(@UUIDParam('id') themeId: string): Promise<AnswerDto> {
-    return this.answerService.getAnswer(themeId);
+  getComment(@UUIDParam('id') themeId: string): Promise<CommentDto> {
+    return this.commentService.getComment(themeId);
   }
 }

@@ -33,19 +33,19 @@ export class QuestionCreateDto {
   @IsString()
   @IsNotEmpty()
   @Trim()
-  readonly theme: ThemeEntity;
+  readonly theme: ThemeEntity['id'];
 
   @ApiProperty()
   @IsString()
   @IsOptional()
   @Trim()
-  readonly subtheme: ThemeEntity;
+  readonly subtheme: ThemeEntity['id'];
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
   @Trim()
-  readonly user: UserEntity;
+  user: UserEntity['id'];
 
   @ApiProperty()
   @IsNumber()

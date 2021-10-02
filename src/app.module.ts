@@ -13,11 +13,10 @@ import { HealthCheckerModule } from './modules/health-checker/health-checker.mod
 import { UserModule } from './modules/user/user.module';
 import { ThemesModule } from './modules/themes/themes.module';
 import { QuestionsModule } from './modules/questions/questions.module';
+import { AnswersModule } from './modules/answers/answers.module';
+import { CommentsModule } from './modules/comments/comments.module';
 import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
-// import { QuestionsService } from './modules/questions/questions.service';
-// import { ThemesService } from './modules/themes/themes.service';
-import { AnswersModule } from './modules/answers/answers.module';
 
 @Module({
   imports: [
@@ -25,6 +24,8 @@ import { AnswersModule } from './modules/answers/answers.module';
     UserModule,
     ThemesModule,
     QuestionsModule,
+    AnswersModule,
+    CommentsModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
@@ -48,7 +49,6 @@ import { AnswersModule } from './modules/answers/answers.module';
       inject: [ApiConfigService],
     }),
     HealthCheckerModule,
-    AnswersModule,
   ],
   providers: [],
 })

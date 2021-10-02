@@ -12,6 +12,9 @@ export class UserDto extends AbstractDto {
   lastName: string;
 
   @ApiPropertyOptional()
+  patronymic: string;
+
+  @ApiPropertyOptional()
   username: string;
 
   @ApiPropertyOptional({ enum: RoleType })
@@ -26,6 +29,12 @@ export class UserDto extends AbstractDto {
   @ApiPropertyOptional()
   phone: string;
 
+  @ApiPropertyOptional({ default: false })
+  emailNotify: boolean;
+
+  @ApiPropertyOptional()
+  balance: number;
+
   @ApiPropertyOptional()
   isActive: boolean;
 
@@ -33,6 +42,9 @@ export class UserDto extends AbstractDto {
     super(user);
     this.firstName = user.firstName;
     this.lastName = user.lastName;
+    this.patronymic = user.patronymic;
+    this.emailNotify = user.emailNotify;
+    this.balance = user.balance;
     this.role = user.role;
     this.email = user.email;
     this.avatar = user.avatar;
