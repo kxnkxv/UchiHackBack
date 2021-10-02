@@ -10,17 +10,20 @@ import path from 'path';
 import { contextMiddleware } from './middlewares';
 import { AuthModule } from './modules/auth/auth.module';
 import { HealthCheckerModule } from './modules/health-checker/health-checker.module';
-import { PostModule } from './modules/post/post.module';
 import { UserModule } from './modules/user/user.module';
+import { ThemesModule } from './modules/themes/themes.module';
+import { QuestionsModule } from './modules/questions/questions.module';
 import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
-import { QuestionsService } from './modules/questions/questions.service';
+// import { QuestionsService } from './modules/questions/questions.service';
+// import { ThemesService } from './modules/themes/themes.service';
 
 @Module({
   imports: [
     AuthModule,
     UserModule,
-    PostModule,
+    ThemesModule,
+    QuestionsModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
@@ -45,7 +48,7 @@ import { QuestionsService } from './modules/questions/questions.service';
     }),
     HealthCheckerModule,
   ],
-  providers: [QuestionsService],
+  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
