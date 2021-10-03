@@ -67,6 +67,32 @@ export class QuestionsService {
     return items.toPageDto(pageMetaDto);
   }
 
+  async getQuestionsByTheme(
+    themeId: string,
+    pageOptionsDto: QuestionPageOptionsDto
+  ): Promise<PageDto<QuestionDto>> {
+    const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+
+    queryBuilder.where('question.theme = :themeId', { themeId });
+
+    const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
+
+    return items.toPageDto(pageMetaDto);
+  }
+
+  async getQuestionsByUser(
+    userId: string,
+    pageOptionsDto: QuestionPageOptionsDto
+  ): Promise<PageDto<QuestionDto>> {
+    const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+
+    queryBuilder.where('question.user = :userId', { userId });
+
+    const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
+
+    return items.toPageDto(pageMetaDto);
+  }
+
   async getQuestion(questionId: string): Promise<QuestionDto> {
     const queryBuilder = this.questionRepository.createQueryBuilder('questions');
 

@@ -51,4 +51,17 @@ export class AnswersService {
 
     return items.toPageDto(pageMetaDto);
   }
+
+  async getAnswersByUser(
+    pageOptionsDto: AnswerPageOptionsDto,
+    userId: string
+  ): Promise<PageDto<AnswerDto>> {
+    const queryBuilder = this.answerRepository.createQueryBuilder('answer');
+
+    queryBuilder.where('answer.user = :userId', { userId });
+
+    const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
+
+    return items.toPageDto(pageMetaDto);
+  }
 }

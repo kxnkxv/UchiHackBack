@@ -96,6 +96,38 @@ export class QuestionsController {
     return createdTheme.toDto<typeof QuestionDto>();
   }
 
+  @Get('theme/:id')
+  @Auth(RoleType.USER)
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get question list',
+    type: QuestionDto,
+  })
+  getQuestionsByTheme(
+    @Query(new ValidationPipe({ transform: true }))
+    pageOptionsDto: QuestionPageOptionsDto,
+    @UUIDParam('id') themeId: string
+  ): Promise<PageDto<QuestionDto>> {
+    return this.questionService.getQuestionsByTheme(themeId, pageOptionsDto);
+  }
+
+  @Get('user/:id')
+  @Auth(RoleType.USER)
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get question list',
+    type: QuestionDto,
+  })
+  getQuestionsByUser(
+    @Query(new ValidationPipe({ transform: true }))
+    pageOptionsDto: QuestionPageOptionsDto,
+    @UUIDParam('id') themeId: string
+  ): Promise<PageDto<QuestionDto>> {
+    return this.questionService.getQuestionsByUser(themeId, pageOptionsDto);
+  }
+
   @Get(':id')
   @Auth(RoleType.USER)
   @HttpCode(HttpStatus.OK)

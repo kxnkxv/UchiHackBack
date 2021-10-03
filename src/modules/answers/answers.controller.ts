@@ -49,6 +49,21 @@ export class AnswersController {
     return this.answerService.getAnswersByQuestion(pageOptionsDto, questionId);
   }
 
+  @Get('user/:userId')
+  @Auth(RoleType.USER)
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get comment',
+    type: AnswerDto,
+  })
+  getCommentByUser(
+    @UUIDParam('id') userId: string,
+    pageOptionsDto: AnswerPageOptionsDto,
+  ): Promise<PageDto<AnswerDto>> {
+    return this.answerService.getAnswersByUser(pageOptionsDto, userId);
+  }
+
   @Post('create')
   @Auth(RoleType.USER)
   @UseInterceptors(AuthUserInterceptor)
