@@ -36,6 +36,9 @@ export class QuestionsService {
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
     const queryBuilder = this.questionRepository.createQueryBuilder('question');
+
+    queryBuilder.innerJoin("question.user", "user")
+
     const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
 
     return items.toPageDto(pageMetaDto);
