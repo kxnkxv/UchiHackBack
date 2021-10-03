@@ -32,7 +32,7 @@ export class QuestionsService {
   async getQuestions(
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
-    const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+    const queryBuilder = this.questionRepository.createQueryBuilder('question');
     const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
 
     return items.toPageDto(pageMetaDto);
@@ -41,7 +41,7 @@ export class QuestionsService {
   async getQuestionsBySearch(
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
-    const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+    const queryBuilder = this.questionRepository.createQueryBuilder('question');
 
     const { q } = pageOptionsDto;
 
@@ -55,7 +55,7 @@ export class QuestionsService {
   async getQuestionsBySuggestions(
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
-    const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+    const queryBuilder = this.questionRepository.createQueryBuilder('question');
 
     const { q } = pageOptionsDto;
 
@@ -71,7 +71,7 @@ export class QuestionsService {
     themeId: string,
     pageOptionsDto: QuestionPageOptionsDto
   ): Promise<PageDto<QuestionDto>> {
-    const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+    const queryBuilder = this.questionRepository.createQueryBuilder('question');
 
     queryBuilder.where('question.theme = :themeId', { themeId });
 
@@ -84,7 +84,7 @@ export class QuestionsService {
     userId: string,
     pageOptionsDto: QuestionPageOptionsDto
   ): Promise<PageDto<QuestionDto>> {
-    const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+    const queryBuilder = this.questionRepository.createQueryBuilder('question');
 
     queryBuilder.where('question.user = :userId', { userId });
 
@@ -94,7 +94,7 @@ export class QuestionsService {
   }
 
   async getQuestion(questionId: string): Promise<QuestionDto> {
-    const queryBuilder = this.questionRepository.createQueryBuilder('questions');
+    const queryBuilder = this.questionRepository.createQueryBuilder('question');
 
     queryBuilder.where('question.id = :questionId', { questionId });
 
