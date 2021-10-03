@@ -41,19 +41,14 @@ export class QuestionsService {
 
     const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
 
-    const newItems = []
-
-    items.forEach( async (item) => {
+    items.forEach( async (item, index) => {
       const nqb = this.userRepository.createQueryBuilder('user');
       nqb.where('user.id = :userId', { userId: item.user });
       const user = await queryBuilder.getOne();
-      newItems.push({
-        ...item,
-        user
-      })
+      items[index]['user'] = user;
     })
 
-    return newItems.toPageDto(pageMetaDto);
+    return items.toPageDto(pageMetaDto);
   }
 
   async getQuestionsBySearch(
