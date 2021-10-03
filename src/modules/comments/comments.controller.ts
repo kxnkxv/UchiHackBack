@@ -44,6 +44,7 @@ export class CommentsController {
   })
   getCommentByQuestion(
     @UUIDParam('id') questionId: string,
+    @Query(new ValidationPipe({ transform: true }))
     pageOptionsDto: CommentPageOptionsDto,
   ): Promise<PageDto<CommentDto>> {
     return this.commentService.getCommentByQuestion(pageOptionsDto, questionId);

@@ -44,6 +44,7 @@ export class AnswersController {
   })
   getCommentByQuestion(
     @UUIDParam('id') questionId: string,
+    @Query(new ValidationPipe({ transform: true }))
     pageOptionsDto: AnswerPageOptionsDto,
   ): Promise<PageDto<AnswerDto>> {
     return this.answerService.getAnswersByQuestion(pageOptionsDto, questionId);
@@ -59,11 +60,11 @@ export class AnswersController {
   })
   getCommentByUser(
     @UUIDParam('id') userId: string,
+    @Query(new ValidationPipe({ transform: true }))
     pageOptionsDto: AnswerPageOptionsDto,
   ): Promise<PageDto<AnswerDto>> {
-    console.log('[userId]', userId)
-    console.log('[userId]', pageOptionsDto)
 
+    console.log('[d]', pageOptionsDto)
     return this.answerService.getAnswersByUser(pageOptionsDto, userId);
   }
 
