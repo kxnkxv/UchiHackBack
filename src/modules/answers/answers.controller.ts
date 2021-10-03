@@ -73,7 +73,7 @@ export class AnswersController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: AnswerDto, description: 'Successfully Created Answer' })
   async createAnswer(
-    @Body() answerCreateDto: AnswerCreateDto,
+    @Body() answerCreateDto,
     @AuthUser() user: UserEntity,
   ): Promise<AnswerDto> {
     answerCreateDto.user = user.id;

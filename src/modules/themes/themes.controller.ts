@@ -49,7 +49,7 @@ export class ThemesController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: ThemeDto, description: 'Successfully Created Theme' })
   async createTheme(
-    @Body() themeCreateDto: ThemeCreateDto,
+    @Body() themeCreateDto,
   ): Promise<ThemeDto> {
     const createdTheme = await this.themeService.createTheme(
       themeCreateDto,
