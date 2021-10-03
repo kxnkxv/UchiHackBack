@@ -34,7 +34,7 @@ export class AnswersController {
     private answerService: AnswersService,
   ) {}
 
-  @Get('question/:questionId')
+  @Get('question/:id')
   @Auth(RoleType.USER)
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
@@ -49,7 +49,7 @@ export class AnswersController {
     return this.answerService.getAnswersByQuestion(pageOptionsDto, questionId);
   }
 
-  @Get('user/:userId')
+  @Get('user/:id')
   @Auth(RoleType.USER)
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
@@ -61,6 +61,9 @@ export class AnswersController {
     @UUIDParam('id') userId: string,
     pageOptionsDto: AnswerPageOptionsDto,
   ): Promise<PageDto<AnswerDto>> {
+    console.log('[userId]', userId)
+    console.log('[userId]', pageOptionsDto)
+
     return this.answerService.getAnswersByUser(pageOptionsDto, userId);
   }
 
