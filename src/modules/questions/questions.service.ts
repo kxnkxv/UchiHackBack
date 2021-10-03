@@ -10,6 +10,9 @@ import { QuestionDto } from './dto/question-dto';
 import { QuestionPageOptionsDto } from './dto/questions-page-options.dto';
 import type { QuestionCreateDto } from './dto/question-create.dto';
 
+import { UserEntity } from '../user/user.entity';
+
+
 @Injectable()
 export class QuestionsService {
   constructor(
@@ -33,9 +36,9 @@ export class QuestionsService {
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
     const queryBuilder = this.questionRepository.createQueryBuilder('question');
-    this.questionRepository.find({ relations: ["user"] });
-
-    const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
+    const { items, pageMetaDto } = await queryBuilder
+      .paginate(pageOptionsDto)
+      .leftJoinAndSelect(UserEntity, "question", "question.user = user.id");
 
     return items.toPageDto(pageMetaDto);
   }
