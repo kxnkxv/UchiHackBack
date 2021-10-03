@@ -55,7 +55,7 @@ export class CommentsController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: CommentDto, description: 'Successfully Created Comment' })
   async createComment(
-    @Body() commentCreateDto: CommentCreateDto,
+    @Body() commentCreateDto,
     @AuthUser() user: UserEntity,
   ): Promise<CommentDto> {
     commentCreateDto.user = user.id;
