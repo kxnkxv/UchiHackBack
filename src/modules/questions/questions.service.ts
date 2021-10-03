@@ -35,9 +35,14 @@ export class QuestionsService {
   async getQuestions(
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
-    const queryBuilder = this.questionRepository.createQueryBuilder('question');
-
-    queryBuilder.innerJoin("question.user", "user")
+    const queryBuilder = this.questionRepository
+      .createQueryBuilder('question')
+      .leftJoinAndSelect(
+        'question.user_id',
+        'user',
+        'user.id = :id',
+        { id: 'user_id' }, // < with '' would set as string (user_id)
+      );
 
     const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
 
