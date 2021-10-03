@@ -84,7 +84,7 @@ export class QuestionsController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: QuestionDto, description: 'Successfully Created Question' })
   async createQuestion(
-    @Body() questionCreateDto: QuestionCreateDto,
+    @Body() questionCreateDto,
     @AuthUser() user: UserEntity,
   ): Promise<QuestionDto> {
     questionCreateDto.user = user.id;
