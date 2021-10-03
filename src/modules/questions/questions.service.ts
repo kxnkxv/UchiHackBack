@@ -45,7 +45,7 @@ export class QuestionsService {
       const nqb = this.userRepository.createQueryBuilder('user');
       nqb.where('user.id = :userId', { userId: item.user });
       const user = await queryBuilder.getOne();
-      items[index]['user'] = user;
+      items[index]['userObj'] = user;
     })
 
     return items.toPageDto(pageMetaDto);
