@@ -11,12 +11,14 @@ import { QuestionPageOptionsDto } from './dto/questions-page-options.dto';
 import type { QuestionCreateDto } from './dto/question-create.dto';
 
 import { UserEntity } from '../user/user.entity';
+import { UserRepository } from '../user/user.repository';
 
 
 @Injectable()
 export class QuestionsService {
   constructor(
     public readonly questionRepository: QuestionsRepository,
+    public readonly userRepository: UserRepository,
     public readonly validatorService: ValidatorService,
   ) {}
 
@@ -35,18 +37,23 @@ export class QuestionsService {
   async getQuestions(
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
-    const queryBuilder = this.questionRepository
-      .createQueryBuilder('question')
-      .leftJoinAndSelect(
-        'question.user_id',
-        'user',
-        'user.id = :id',
-        { id: 'user_id' }, // < with '' would set as string (user_id)
-      );
+    const queryBuilder = this.questionRepository.createQueryBuilder('question');
 
     const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
 
-    return items.toPageDto(pageMetaDto);
+    const newItems = []
+
+    items.forEach( async (item) => {
+      const nqb = this.userRepository.createQueryBuilder('user');
+      nqb.where('user.id = :userId', { userId: item.user });
+      const user = await queryBuilder.getOne();
+      newItems.push({
+        ...item,
+        user
+      })
+    })
+
+    return newItems.toPageDto(pageMetaDto);
   }
 
   async getQuestionsBySearch(
@@ -71,7 +78,6 @@ export class QuestionsService {
     const { q } = pageOptionsDto;
 
     queryBuilder.searchByLevenshtein(q, ['title', 'description']);
-
 
     const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
 
