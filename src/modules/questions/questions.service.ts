@@ -33,6 +33,8 @@ export class QuestionsService {
     pageOptionsDto: QuestionPageOptionsDto,
   ): Promise<PageDto<QuestionDto>> {
     const queryBuilder = this.questionRepository.createQueryBuilder('question');
+    this.questionRepository.find({ relations: ["user"] });
+
     const { items, pageMetaDto } = await queryBuilder.paginate(pageOptionsDto);
 
     return items.toPageDto(pageMetaDto);
